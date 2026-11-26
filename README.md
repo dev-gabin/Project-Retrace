@@ -15,7 +15,7 @@ Retrace는 열쇠, 지갑, 이어폰처럼 자주 쓰는 물건을 어디에 두
 | 이름 | 역할 |
 |---|---|
 | Gabin (`dev-gabin`) | **STM32 메인 유닛**의 USB Serial 명령 처리, Pan/Tilt 서보·레이저 제어, PIR 이벤트 전송 구현. **ESP32 현관등**의 PIR 자동 점등, Wi-Fi TCP 연결, `NORMAL`·`ALERT` 명령 처리 구현. **ESP32-C3 LCD**의 최근 목격 기록·외출 준비물·날씨 표시 구현. |
-| 기여자 | Jetson Nano의 YOLO 객체 탐지와 마지막 목격 기록, JPEG·MariaDB 저장, C TCP 서버와 HTTP API, 웹 조회·제어 화면, 레이저 좌표 변환, 스마트 서랍 연동, 외출 준비물 재확인 및 휴대폰 알림 구현. |
+| Eunpyo Jun (JuEuPy) | Jetson Nano의 YOLO 객체 탐지와 마지막 목격 기록, JPEG·MariaDB 저장, C TCP 서버와 HTTP API, 웹 조회·제어 화면, 레이저 좌표 변환, 스마트 서랍 연동, 외출 준비물 재확인 및 휴대폰 알림 구현. |
 
 ## 2. 시스템 구성
 
