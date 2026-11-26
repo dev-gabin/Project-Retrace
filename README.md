@@ -261,3 +261,7 @@ Retrace-Project/
 - [핀맵](docs/pinmap.md) — STM32 ×2, ESP32 ×2
 - [통신 프로토콜](docs/protocol.md)
 - [협업 규칙](CONTRIBUTING.md) — feature 단독 검증 후 develop 통합
+
+## 모델과 데이터 준비
+
+이 소스에는 모델 가중치가 없습니다. 사용 권한을 확인한 가중치를 준비하고 해당 브랜치의 Jetson 설정이나 문서에 나온 모델 경로에 배치하세요. 예시 IP와 경로는 실제 환경 값으로 설정하세요.
