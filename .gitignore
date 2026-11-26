@@ -60,3 +60,24 @@ Thumbs.db
 /jetson_nano/server_jetson/.env
 /jetson_nano/server_jetson/server/idpasswd.txt
 /jetson_nano/client/bluetooth/client_bluetooth.conf
+
+# Local-only files
+.env.*
+!.env.example
+config_local.*
+*.swp
+.ipynb_checkpoints/
+Debug/
+Release/
+dataset/
+datasets/
+wandb/
+*.pt
+*.pth
+*.onnx
+*.engine
+*.tflite
+*.safetensors
+*.ckpt
+*.zip
+/data/
