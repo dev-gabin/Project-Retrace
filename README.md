@@ -287,3 +287,7 @@ Retrace-Project/
 | [웹 실행·연동](web/README.md) | 웹 프론트엔드 실행 |
 | [LCD 배선·표시·설정](esp32/preparation_display/README.md) | LCD 노드 연결과 동작 |
 | [협업·Git 규칙](CONTRIBUTING.md) | Git 브랜치 및 협업 규칙 |
+
+## 모델과 데이터 준비
+
+이 소스에는 모델 가중치가 없습니다. 사용 권한을 확인한 가중치를 준비하고 해당 브랜치의 Jetson 설정이나 문서에 나온 모델 경로에 배치하세요. 예시 IP와 경로는 실제 환경 값으로 설정하세요.

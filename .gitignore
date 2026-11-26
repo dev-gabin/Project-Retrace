@@ -66,3 +66,22 @@ Thumbs.db
 # Jetson runtime data / credentials
 /data/
 /jetson_nano/.local/
+
+# Local-only files
+.env.*
+!.env.example
+config_local.*
+.ipynb_checkpoints/
+Debug/
+Release/
+dataset/
+datasets/
+wandb/
+*.pt
+*.pth
+*.onnx
+*.engine
+*.tflite
+*.safetensors
+*.ckpt
+*.zip
