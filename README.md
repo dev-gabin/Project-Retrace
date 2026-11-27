@@ -31,7 +31,7 @@ Retrace는 열쇠, 지갑, 이어폰처럼 자주 쓰는 물건을 어디에 두
 | Jetson HTTP API → ESP32-C3 → I2C LCD | 최근 목격 기록과 준비물 목록을 조회해 시각·날씨와 함께 표시 |
 | Jetson Nano → ntfy → 휴대폰 | 외출 준비물 확인 결과와 SOS 알림 전달 |
 
-장치별 배선과 메시지 형식은 [보드 핀맵](https://github.com/dev-gabin/Project-Retrace/blob/main/docs/pinmap.md)과 [통신 프로토콜](https://github.com/dev-gabin/Project-Retrace/blob/main/docs/protocol.md)에 정리했습니다.
+장치별 배선과 메시지 형식은 아래 문서에 정리했습니다. [보드 핀맵](https://github.com/dev-gabin/Project-Retrace/blob/main/docs/pinmap.md) · [통신 프로토콜](https://github.com/dev-gabin/Project-Retrace/blob/main/docs/protocol.md)
 
 ## 3. 사용 기술
 
@@ -57,15 +57,7 @@ Retrace는 열쇠, 지갑, 이어폰처럼 자주 쓰는 물건을 어디에 두
 3. **외출 준비물 확인** — 현관 PIR 이벤트가 들어오면 책상 카메라 영상에서 등록한 준비물이 계속 보이는지 약 3초간 재확인합니다. 물건이 반복해서 탐지되면 휴대폰 알림과 현관등 경고를 보냅니다.
 4. **LCD와 SOS** — ESP32-C3 LCD에 최근 목격 기록, 준비물 목록, 시각과 날씨를 표시합니다. 스마트 서랍의 SOS 버튼을 누르면 휴대폰 찾기 알림을 보냅니다.
 
-## 6. 실행 방법
-
-1. Jetson Nano에서 CUDA 지원 PyTorch와 OpenCV 환경을 준비하고, `jetson_nano/requirements.txt`의 추가 패키지를 설치합니다. [개발 환경 안내](https://github.com/dev-gabin/Project-Retrace/blob/main/docs/environment.md)
-2. 사용 권한을 확인한 YOLO 모델을 프로젝트에서 지정한 경로에 배치합니다. [추론 설정과 모델 경로](https://github.com/dev-gabin/Project-Retrace/blob/main/docs/inference_policy.md)
-3. MariaDB와 C TCP 서버를 설정하고 실행합니다. 실제 계정 정보와 장치별 네트워크 설정은 로컬 파일에 보관합니다. [Jetson 서버·DB 실행 안내](https://github.com/dev-gabin/Project-Retrace/blob/main/jetson_nano/server_jetson/README.md)
-4. 핀맵에 따라 장치를 연결하고 STM32·ESP32 펌웨어를 준비합니다. [보드 핀맵](https://github.com/dev-gabin/Project-Retrace/blob/main/docs/pinmap.md)
-5. 프로젝트 루트에서 `python jetson_nano/main.py`를 실행하고 웹 화면을 엽니다. [웹 실행·연동 안내](https://github.com/dev-gabin/Project-Retrace/blob/main/web/README.md)
-
-### 프로젝트 구조
+## 6. 저장소 구조와 참고 문서
 
 ```text
 Project-Retrace/
@@ -84,29 +76,28 @@ Project-Retrace/
 │   ├── server_jetson/        # C TCP 서버, MariaDB 연동
 │   └── calibration/          # 레이저 좌표 보정
 ├── web/                      # 물건 조회·장치 제어 화면
-├── docs/                     # 핀맵, 프로토콜, 환경, 검증 문서
+├── docs/                     # 핀맵, 프로토콜, 환경, 평가 자료
 └── README.md
 ```
 
+- [개발 환경 안내](https://github.com/dev-gabin/Project-Retrace/blob/main/docs/environment.md)
+- [추론 설정과 모델 경로](https://github.com/dev-gabin/Project-Retrace/blob/main/docs/inference_policy.md)
+- [Jetson 서버·DB 실행 안내](https://github.com/dev-gabin/Project-Retrace/blob/main/jetson_nano/server_jetson/README.md)
+- [웹 실행·연동 안내](https://github.com/dev-gabin/Project-Retrace/blob/main/web/README.md)
+
 ## 7. 모델 성능 평가
 
-COCO 사전학습 YOLO 모델에 차키, 지갑, 이어폰 클래스를 추가 학습했습니다. 아래는 학습에 사용하지 않은 테스트 이미지 155장(객체 238개)을 대상으로 한 평가 결과입니다.
+COCO 사전학습 YOLO 모델에 차키·지갑·이어폰을 추가 학습했습니다. 학습에 사용하지 않은 테스트 이미지 155장(객체 238개)에서 mAP@50 88.6%, mAP@50–95 62.1%를 기록했습니다.
 
-| 평가 지표 | 결과 |
-|---|---:|
-| 정밀도 (Precision) | 83.3% |
-| 재현율 (Recall) | 82.4% |
-| mAP@50 | 88.6% |
-| mAP@50–95 | 62.1% |
- 
+![Retrace Precision–Recall 곡선](./docs/BoxPR_curve.png)
 
-![Retrace PR Curve](./docs/BoxPR_curve.png)
+지갑의 AP@50은 96.6%로 세 클래스 중 가장 높았습니다. 이어폰은 85.9%, 차키는 83.3%를 기록했습니다.
 
 ## 8. 결과
 
 ### 모바일 웹 화면 시연
-<img src="./docs/retrace-web-demo.gif" width="360" alt="Retrace 모바일 웹 화면 시연" />
 
+<img src="./docs/retrace-web-demo.gif" width="360" alt="Retrace 모바일 웹 화면 시연" />
 
 *휴대폰에서 Retrace 웹 화면의 물건 찾기와 스마트 서랍 기능을 시연합니다.*
 
@@ -130,4 +121,17 @@ COCO 사전학습 YOLO 모델에 차키, 지갑, 이어폰 클래스를 추가 �
 
 ## 10. 배운 점
 
-YOLO 모델에 차키·지갑·이어폰을 추가 학습하고, 학습에 사용하지 않은 이미지로 평가하면서 새 물건을 얼마나 잘 탐지하는지 검증하는 방법을 배웠습니다. STM32에서는 USB Serial로 받은 명령을 해석해 서보와 레이저를 제어하는 펌웨어를 작성했습니다. ESP32 현관등과 LCD를 구현하면서는 움직임 이벤트가 들어왔을 때 처리하는 동작과, 주기적으로 정보를 조회해 화면을 갱신하는 동작을 각각 설계하는 방법을 익혔습니다.
+### AI 비전
+
+COCO 사전학습 YOLO 모델에 차키·지갑·이어폰을 추가 학습했습니다. 학습에 사용하지 않은 이미지로 평가하고, 클래스별 재현율과 mAP를 비교하면서 모델이 어떤 물건을 놓치기 쉬운지 확인하는 방법을 배웠습니다.
+
+### 임베디드 시스템
+
+STM32에서 USB Serial로 받은 명령을 해석해 Pan/Tilt 서보와 레이저를 제어하는 펌웨어를 작성했습니다. ESP32 현관등과 ESP32-C3 LCD를 구현하면서, PIR 센서 이벤트에 반응하는 동작과 주기적으로 데이터를 조회해 화면을 갱신하는 동작을 각각 설계하는 방법을 익혔습니다.
+
+### 시스템 연동
+
+카메라의 탐지 결과가 마지막 목격 기록으로 저장되고, 웹 조회와 레이저 위치 안내에 사용되는 흐름을 통합 테스트했습니다. 이 과정에서 카메라로 얻은 좌표를 실제 서보 각도로 연결하려면 카메라와 레이저의 설치 위치에 맞춰 보정해야 한다는 점을 배웠습니다.
+
+      
+오후 2:10
