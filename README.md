@@ -31,7 +31,7 @@ Retrace는 열쇠, 지갑, 이어폰처럼 자주 쓰는 물건을 어디에 두
 | Jetson HTTP API → ESP32-C3 → I2C LCD | 최근 목격 기록과 준비물 목록을 조회해 시각·날씨와 함께 표시 |
 | Jetson Nano → ntfy → 휴대폰 | 외출 준비물 확인 결과와 SOS 알림 전달 |
 
-장치별 배선과 메시지 형식은 아래 문서에 정리했습니다. [보드 핀맵](https://github.com/dev-gabin/Project-Retrace/blob/main/docs/pinmap.md) · [통신 프로토콜](https://github.com/dev-gabin/Project-Retrace/blob/main/docs/protocol.md)
+장치별 배선과 메시지 형식은 아래 문서에 정리했습니다. [보드 핀맵](./docs/pinmap.md) · [통신 프로토콜](./docs/protocol.md)
 
 ## 3. 사용 기술
 
@@ -57,7 +57,15 @@ Retrace는 열쇠, 지갑, 이어폰처럼 자주 쓰는 물건을 어디에 두
 3. **외출 준비물 확인** — 현관 PIR 이벤트가 들어오면 책상 카메라 영상에서 등록한 준비물이 계속 보이는지 약 3초간 재확인합니다. 물건이 반복해서 탐지되면 휴대폰 알림과 현관등 경고를 보냅니다.
 4. **LCD와 SOS** — ESP32-C3 LCD에 최근 목격 기록, 준비물 목록, 시각과 날씨를 표시합니다. 스마트 서랍의 SOS 버튼을 누르면 휴대폰 찾기 알림을 보냅니다.
 
-## 6. 저장소 구조와 참고 문서
+## 6. 실행 방법
+
+1. Jetson Nano에서 CUDA를 지원하는 PyTorch와 OpenCV 환경을 준비하고, `jetson_nano/requirements.txt`의 추가 패키지를 설치합니다. [개발 환경 안내](./docs/environment.md)
+2. 사용 권한을 확인한 YOLO 모델 가중치를 프로젝트에서 지정한 경로에 배치합니다. [추론 설정과 모델 경로](./docs/inference_policy.md)
+3. MariaDB와 C TCP 서버를 설정하고 실행합니다. 실제 계정 정보와 장치별 네트워크 설정은 로컬 파일에 보관합니다. [Jetson 서버·DB 실행 안내](./jetson_nano/server_jetson/README.md)
+4. 핀맵에 따라 장치를 연결하고 STM32·ESP32 펌웨어를 준비합니다. [보드 핀맵](./docs/pinmap.md)
+5. 프로젝트 루트에서 `python jetson_nano/main.py`를 실행하고 웹 화면을 엽니다. [웹 실행·연동 안내](./web/README.md)
+
+### 프로젝트 구조
 
 ```text
 Project-Retrace/
@@ -79,11 +87,6 @@ Project-Retrace/
 ├── docs/                     # 핀맵, 프로토콜, 환경, 평가 자료
 └── README.md
 ```
-
-- [개발 환경 안내](https://github.com/dev-gabin/Project-Retrace/blob/main/docs/environment.md)
-- [추론 설정과 모델 경로](https://github.com/dev-gabin/Project-Retrace/blob/main/docs/inference_policy.md)
-- [Jetson 서버·DB 실행 안내](https://github.com/dev-gabin/Project-Retrace/blob/main/jetson_nano/server_jetson/README.md)
-- [웹 실행·연동 안내](https://github.com/dev-gabin/Project-Retrace/blob/main/web/README.md)
 
 ## 7. 모델 성능 평가
 
