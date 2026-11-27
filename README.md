@@ -100,6 +100,8 @@ COCO 사전학습 YOLO 모델에 차키, 지갑, 이어폰 클래스를 추가 �
 | mAP@50–95 | 62.1% |
  
 
+![Retrace PR Curve](./docs/BoxPR_curve.png)
+
 ## 8. 결과
 
 ### 모바일 웹 화면 시연
